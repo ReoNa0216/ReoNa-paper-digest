@@ -26,6 +26,8 @@ pip install -r requirements.txt
 python -m playwright install chromium   # 浏览器自动化（存草稿用）
 ```
 
+> 💡 Windows 中文系统提示：`requirements.txt` 保持纯 ASCII（注释为英文）。若你自行加中文注释，pip 在 GBK 默认编码下会报 `UnicodeDecodeError`。
+
 可选依赖：
 - 封面生成（`cover-gen.py`）需要 ZenMux API Key（环境变量 `ZENMUX_API_KEY`）
 - 摘要生成（`summary.py`）需要 DeepSeek API Key（`DEEPSEEK_API_KEY`）；无密钥时自动退回规则抽取

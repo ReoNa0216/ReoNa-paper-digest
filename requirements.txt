@@ -1,23 +1,26 @@
-# ReoNa-paper-digest 依赖（Python 3.10+）
-# 安装：pip install -r requirements.txt
+# ReoNa-paper-digest dependencies (Python 3.10+)
+# Install: pip install -r requirements.txt
+# NOTE: keep this file ASCII-only; Chinese comments break pip on
+# Windows systems with GBK default encoding (UnicodeDecodeError).
 
-# 核心渲染
+# Core rendering
 css-inline>=0.14
 markdown>=3.5
+pymdown-extensions>=10.0   # pymdownx.* extensions used by render.py
 emoji>=2.8
 
-# 浏览器自动化（存草稿）
+# Browser automation (save draft to WeChat)
 playwright>=1.40
 
-# 配置与数据
+# Config & data
 PyYAML>=6.0
 
-# PDF 插图（pdf-figure.py）
+# PDF figure extraction (pdf-figure.py)
 PyMuPDF>=1.23
 
-# 封面生成（cover-gen.py）
+# Cover generation (cover-gen.py)
 Pillow>=10.0
 openai>=1.40
 
-# 测试
+# Tests
 pytest>=7.0
