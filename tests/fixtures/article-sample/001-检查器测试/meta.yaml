@@ -1,0 +1,7 @@
+title: 检查器测试文章
+summary: 用于验证 publish-check 的文章摘要，PyYAML 解析多行列表也无压力。
+tags:
+  - AI
+  - 科研
+status: draft
+cover_image: assets/covers/001-cover.png

@@ -1,0 +1,83 @@
+[
+  {
+    "title": "RKHS 与 MMD 的讨论",
+    "create_time": 1750000000.0,
+    "current_node": "n4",
+    "mapping": {
+      "n0": {
+        "id": "n0",
+        "parent": null,
+        "children": ["n1"],
+        "message": {"author": {"role": "system"}, "content": {"content_type": "text", "parts": ["system prompt"]}}
+      },
+      "n1": {
+        "id": "n1",
+        "parent": "n0",
+        "children": ["n2"],
+        "message": {
+          "author": {"role": "user"},
+          "content": {"content_type": "text", "parts": ["为什么要用 RKHS？"]},
+          "create_time": 1750000100.0,
+          "metadata": {}
+        }
+      },
+      "n2": {
+        "id": "n2",
+        "parent": "n1",
+        "children": ["n3"],
+        "message": {
+          "author": {"role": "assistant"},
+          "content": {"content_type": "text", "parts": ["因为再生核希尔伯特空间可以让内积计算等价于核函数求值，无需显式构造特征映射。"]},
+          "create_time": 1750000200.0,
+          "metadata": {"model_slug": "gpt-4o"}
+        }
+      },
+      "n3": {
+        "id": "n3",
+        "parent": "n2",
+        "children": ["n4"],
+        "message": {
+          "author": {"role": "tool"},
+          "content": {"content_type": "execution_output", "parts": ["stdout noise"]}
+        }
+      },
+      "n4": {
+        "id": "n4",
+        "parent": "n3",
+        "children": [],
+        "message": {
+          "author": {"role": "user"},
+          "content": {
+            "content_type": "multimodal_text",
+            "parts": ["那 MMD 又是怎么推出来的？配图：", {"content_type": "image_asset_pointer", "asset_pointer": "file-abc123", "metadata": {}}]
+          },
+          "create_time": 1750000300.0,
+          "metadata": {}
+        }
+      }
+    }
+  },
+  {
+    "title": "另一篇与 AI 的闲聊",
+    "create_time": 1760000000.0,
+    "current_node": "m1",
+    "mapping": {
+      "m0": {
+        "id": "m0",
+        "parent": null,
+        "children": ["m1"],
+        "message": {"author": {"role": "user"}, "content": {"content_type": "text", "parts": ["你好"]}}
+      },
+      "m1": {
+        "id": "m1",
+        "parent": "m0",
+        "children": [],
+        "message": {
+          "author": {"role": "assistant"},
+          "content": {"content_type": "text", "parts": ["你好！有什么可以帮你？"]},
+          "metadata": {"model_slug": "gpt-4o"}
+        }
+      }
+    }
+  }
+]

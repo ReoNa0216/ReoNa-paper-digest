@@ -1,0 +1,354 @@
+/* ReoNa wechat theme
+   改编自 doocs/md 经典主题（WTFPL 协议，可自由使用）。
+   已预解析：无 var()/calc()/color-mix()，颜色全部扁平化，微信编辑器直接兼容。
+   __PRIMARY__ / __PRIMARY_RGB__ 由 render.py 按 --primary-color 替换。 */
+
+/* 字体族共享：正文 p / 各级标题 / 列表 / 表格 / 图注全部显式声明衬线字体，
+   不依赖 container 继承——微信粘贴图片会改写 DOM 结构，继承链断裂后
+   无显式 font-family 的元素会回退成微信默认字体（用户实测反馈）。 */
+section,
+.container,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+blockquote,
+td,
+th,
+.fig-caption {
+  font-family: "Times New Roman", "Songti SC", SimSun, serif;
+}
+
+section,
+.container {
+  font-size: 16px;
+  line-height: 1.7;
+  text-align: justify;
+  color: #1a1a1a;
+}
+
+section > :first-child {
+  margin-top: 0 !important;
+}
+
+blockquote {
+  margin: 0 0 1em;
+}
+
+table {
+  border-collapse: collapse;
+  min-width: 100%;
+}
+
+/* ==================== 标题 ==================== */
+h1 {
+  display: table;
+  padding: 0 1em;
+  border-bottom: 2px solid __PRIMARY__;
+  margin: 2em auto 1em;
+  color: #000000;
+  font-size: 19.2px;
+  font-weight: bold;
+  text-align: center;
+}
+
+h2 {
+  /* 居中：用户要求章节标题居中；左右 margin 收窄避免长标题换行占两行 */
+  margin: 30px 4px 15px;
+  padding: 0 0 8px;
+  color: #000000;
+  border-bottom: 2px solid #000000;
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+}
+
+h3 {
+  margin: 20px 4px 10px;
+  color: #000000;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: left;
+}
+
+h4,
+h5,
+h6 {
+  margin: 2em 8px 0.5em;
+  color: __PRIMARY__;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+h5,
+h6 {
+  margin: 1.5em 8px 0.5em;
+}
+
+/* ==================== 段落 ==================== */
+p {
+  margin: 16px 0;
+  line-height: 1.7;
+  text-align: justify;
+  color: #1a1a1a;
+}
+
+/* ==================== 引用块 ==================== */
+blockquote {
+  font-style: normal;
+  padding: 1em;
+  border-left: 4px solid __PRIMARY__;
+  border-radius: 6px;
+  color: #3f3f3f;
+  background-color: #f7f7f7;
+}
+
+blockquote > p {
+  display: block;
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  color: #3f3f3f;
+  margin: 0;
+}
+
+/* ==================== GFM 警告块（[!TIP] 等） ==================== */
+.markdown-alert-note,
+.markdown-alert-tip,
+.markdown-alert-important,
+.markdown-alert-warning,
+.markdown-alert-caution {
+  border: 1px solid;
+  border-radius: 6px;
+  padding: 0.8em 1em;
+  margin: 1em 8px;
+}
+
+.markdown-alert-note {
+  border-color: #bcd7f5;
+  border-left: 4px solid #478be6;
+  background-color: #eaf2fc;
+}
+
+.markdown-alert-tip {
+  border-color: #bfe3c1;
+  border-left: 4px solid #57ab5a;
+  background-color: #eaf7ec;
+}
+
+.markdown-alert-important {
+  border-color: #d4c3ef;
+  border-left: 4px solid #986ee2;
+  background-color: #f1ecfa;
+}
+
+.markdown-alert-warning {
+  border-color: #ecd9a6;
+  border-left: 4px solid #c69026;
+  background-color: #fdf6e3;
+}
+
+.markdown-alert-caution {
+  border-color: #f2c3bf;
+  border-left: 4px solid #e5534b;
+  background-color: #fdf0ee;
+}
+
+.markdown-alert-note p,
+.markdown-alert-tip p,
+.markdown-alert-important p,
+.markdown-alert-warning p,
+.markdown-alert-caution p {
+  margin: 0.3em 0;
+}
+
+.markdown-alert-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin: 0 0 0.5em;
+  font-weight: bold;
+}
+
+.alert-title-note { color: #478be6; }
+.alert-title-tip { color: #57ab5a; }
+.alert-title-important { color: #986ee2; }
+.alert-title-warning { color: #c69026; }
+.alert-title-caution { color: #e5534b; }
+
+/* ==================== 代码 ==================== */
+pre {
+  background-color: #f6f8fa;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 10px 8px;
+  padding: 0;
+  line-height: 1.5;
+  font-size: 90%;
+}
+
+pre code {
+  display: -webkit-box;
+  padding: 0.5em 1em 1em;
+  overflow-x: auto;
+  text-indent: 0;
+  color: #3f3f3f;
+  background-color: transparent;
+  white-space: nowrap;
+  margin: 0;
+  border: none;
+}
+
+code {
+  font-size: 90%;
+  color: __PRIMARY__;
+  background-color: rgba(__PRIMARY_RGB__, 0.08);
+  padding: 3px 5px;
+  border-radius: 4px;
+  border: 1px solid rgba(__PRIMARY_RGB__, 0.2);
+}
+
+/* ==================== 图片 ==================== */
+img {
+  display: block;
+  max-width: 100%;
+  /* 上下边距收紧（原 30px）：纯图片段 p 边距已在 render 后处理清零，
+     这里 16px 保持与正文段距一致的呼吸感，避免图片前后出现大空行 */
+  margin: 16px auto;
+  border: 1px solid #dddddd;
+}
+
+/* ==================== 列表 ==================== */
+ol,
+ul {
+  padding-left: 1em;
+  margin-left: 0;
+  color: #3f3f3f;
+}
+
+li {
+  margin: 0.2em 8px;
+  color: #3f3f3f;
+}
+
+li.task-list-item {
+  list-style: none;
+}
+
+/* ==================== 分割线 ==================== */
+hr {
+  border-style: solid;
+  border-width: 2px 0 0;
+  border-color: rgba(0, 0, 0, 0.1);
+  -webkit-transform-origin: 0 0;
+  -webkit-transform: scale(1, 0.5);
+  transform-origin: 0 0;
+  transform: scale(1, 0.5);
+  height: 0.4em;
+  margin: 1.5em 0;
+}
+
+/* ==================== 文本元素 ==================== */
+em {
+  font-style: italic;
+  font-size: inherit;
+}
+
+a {
+  color: #576b95;
+  text-decoration: none;
+}
+
+strong {
+  color: __PRIMARY__;
+  font-weight: bold;
+  font-size: inherit;
+}
+
+mark {
+  background-color: __PRIMARY__;
+  padding: 2px 4px;
+  border-radius: 2px;
+  color: #ffffff;
+}
+
+/* ==================== 表格 ==================== */
+/* 手机端适配：word-break: keep-all 禁止中文换行会把列撑爆、表格溢出屏宽
+   （用户手机实测表格显示不全）。改允许换行 + 收紧单元格留白 + 略缩字号。 */
+table {
+  color: #3f3f3f;
+  border-collapse: collapse;
+  min-width: 100%;
+  font-size: 14px;
+}
+
+thead {
+  font-weight: bold;
+  color: #3f3f3f;
+}
+
+th {
+  border: 1px solid rgba(63, 63, 63, 0.15);
+  padding: 0.3em 0.4em;
+  color: #3f3f3f;
+  word-break: break-word;
+  background-color: rgba(63, 63, 63, 0.05);
+}
+
+td {
+  border: 1px solid rgba(63, 63, 63, 0.15);
+  padding: 0.3em 0.4em;
+  color: #3f3f3f;
+  word-break: break-word;
+}
+
+/* ==================== 数学公式（MathJax SVG） ==================== */
+.katex-inline {
+  max-width: 100%;
+  overflow-x: auto;
+  cursor: pointer;
+}
+
+.katex-block {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  cursor: pointer;
+  padding: 0.5em 0;
+  text-align: center;
+}
+
+/* ==================== 图片图注 ==================== */
+.fig-caption {
+  text-align: center;
+  color: #888888;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 4px 0 20px;
+}
+
+/* ==================== Mermaid ==================== */
+pre.mermaid {
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  overflow: visible;
+}
+
+/* Mermaid 节点标签：覆盖正文 p 规则（16px 边距/字号），避免框内空行与放大 */
+.mermaid p {
+  margin: 0 !important;
+  text-align: center !important;
+  line-height: 1.2 !important;
+  font-size: 14px !important;
+  color: inherit !important;
+  letter-spacing: normal !important;
+}
+
+pre.mermaid svg {
+  max-width: 100%;
+}

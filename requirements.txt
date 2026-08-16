@@ -1,0 +1,23 @@
+# ReoNa-paper-digest 依赖（Python 3.10+）
+# 安装：pip install -r requirements.txt
+
+# 核心渲染
+css-inline>=0.14
+markdown>=3.5
+emoji>=2.8
+
+# 浏览器自动化（存草稿）
+playwright>=1.40
+
+# 配置与数据
+PyYAML>=6.0
+
+# PDF 插图（pdf-figure.py）
+PyMuPDF>=1.23
+
+# 封面生成（cover-gen.py）
+Pillow>=10.0
+openai>=1.40
+
+# 测试
+pytest>=7.0

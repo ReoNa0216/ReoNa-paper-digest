@@ -1,0 +1,6 @@
+﻿__pycache__/
+*.pyc
+.env
+tests/output/render/
+tests/output/exporter/
+tests/output/official/
