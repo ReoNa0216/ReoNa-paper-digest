@@ -18,7 +18,8 @@ PyYAML>=6.0
 # PDF figure extraction (pdf-figure.py)
 PyMuPDF>=1.23
 
-# Cover generation (cover-gen.py)
+# Cover generation (cover-gen.py) — qwen-image via ZenMux Vertex AI protocol
+google-genai>=1.0
 Pillow>=10.0
 openai>=1.40
 

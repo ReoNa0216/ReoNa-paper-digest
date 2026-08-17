@@ -1,4 +1,4 @@
-﻿# ReoNa-paper-digest
+# ReoNa-paper-digest
 
 **把「论文 + ChatGPT 讨论」一键变成微信公众号文章草稿的完整管线。**
 
@@ -85,7 +85,7 @@ python ReoNa-paper-digest/scripts/prepare.py inbox/第2篇 --title "文章标题
 | `publish.py` | 存草稿：填标题/摘要、分段粘贴、图片上传、保存确认 |
 | `publish-check.py` | 发布前检查（元数据/封面/引用等） |
 | `pdf-figure.py` | 从论文 PDF 截取插图（含图注裁剪） |
-| `cover-gen.py` | ZenMux gpt-image-2 生成封面 → 900×383 |
+| `cover-gen.py` | ZenMux qwen-image-2.0 生成封面（900×383，固定 1 张） |
 | `summary.py` | DeepSeek 生成摘要（≤120 字），无密钥规则回退 |
 | `fetch-image.py` | 下载外部图片到本地 |
 | `wechat_cover.py` | 封面路径统一解析 |

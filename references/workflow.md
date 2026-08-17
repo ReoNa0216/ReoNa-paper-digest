@@ -1,4 +1,4 @@
-﻿# ReoNa-paper-digest — 分阶段操作清单
+# ReoNa-paper-digest — 分阶段操作清单
 
 > 规范与约束以 `SKILL.md` 为准；本文件是每阶段的具体操作步骤。每个阶段通常是独立会话。
 
@@ -43,9 +43,18 @@ python ReoNa-paper-digest/scripts/prepare.py inbox/子文件夹 --title "文章�
    - 辩证批判、短段落、无说教、术语首次中文注释
    - WeMD 方言（**公式单行**、Mermaid 用 `flowchart TB`、高亮 ≤5、表格 ≤4 列）
    - **正文不写 `#` 大标题**（文章标题在微信文章头显示，正文重复会残留空行删不掉）
+   - **第一人称**：正文不出现「对话里 ChatGPT 说」等素材来源表述，观点归属"我/我们"
+   - **引号全角中文**（“…”）；`<div class="fig-caption">` 等 HTML 属性保持 ASCII
+   - 对话中讲解数学原理的公式（z-score、相似度、倍数变化等）单行化后保留进正文
    - 引用按首次出现顺序编号；文末「## 参考文献」条目间空行
-   - 正文引用 Figure 处保留引用文字，并规划插图（见 Phase 4）
+   - 正文引用 Figure 处保留引用文字，并规划插图（含扩展数据图面板，见 Phase 4）
 4. 写完更新 `meta.yaml`（title/summary/author）。
+
+**Phase 3 出口自查清单**：
+- [ ] 无「对话里 ChatGPT 说/材料中提到」等素材来源表述（第一人称）
+- [ ] 引号全部全角中文（除 HTML 属性）
+- [ ] 所有公式单行；对话中的关键数学原理公式已保留
+- [ ] 正文引用的每个图号（含扩展数据图）都有对应截图计划
 
 ## Phase 4 · Review（质检 + 插图）
 
@@ -67,7 +76,7 @@ python ReoNa-paper-digest/scripts/prepare.py inbox/子文件夹 --title "文章�
 4. 通过后：`publish.py articles/00X-标题`（自动填标题/作者/摘要 → 分段粘贴正文 + 图片上传 → 保存草稿 → 回报链接）。**群发仍由用户在后台人工点击。**
 5. **封面（手动）**：草稿保存后，人工在编辑器封面区「拖拽或选择封面 → 本地上传 → 选择 `publish.py` 打印的封面文件 → 确定 → 再保存」；**不做自动上传**（微信编辑器封面对话框自动化不可靠，已固定为手动）。
 6. 更新 `EDITORIAL_CALENDAR` / `ARTICLES_SUMMARY` / `README` 状态，Git 提交。
-7. **封面生成**：文章定稿后审计提示词 → `cover-gen.py` 生成（选 N → `--final` 缩放 900×383）→ 确认 `meta.yaml.cover_image` 解析正确。
+7. **封面生成**：文章定稿后审计提示词 → `cover-gen.py -f 提示词.md -o assets/covers/NNN-cover.png --slug NNN`（qwen-image-2.0，固定生成 1 张直接出最终 900×383，无候选文件）→ 确认 `meta.yaml.cover_image` 解析正确。
 
 ## 已知边界速查
 
