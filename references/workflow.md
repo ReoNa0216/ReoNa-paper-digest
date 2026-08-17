@@ -76,7 +76,7 @@ python ReoNa-paper-digest/scripts/prepare.py inbox/子文件夹 --title "文章�
 4. 通过后：`publish.py articles/00X-标题`（自动填标题/作者/摘要 → 分段粘贴正文 + 图片上传 → 保存草稿 → 回报链接）。**群发仍由用户在后台人工点击。**
 5. **封面（手动）**：草稿保存后，人工在编辑器封面区「拖拽或选择封面 → 本地上传 → 选择 `publish.py` 打印的封面文件 → 确定 → 再保存」；**不做自动上传**（微信编辑器封面对话框自动化不可靠，已固定为手动）。
 6. 更新 `EDITORIAL_CALENDAR` / `ARTICLES_SUMMARY` / `README` 状态，Git 提交。
-7. **封面生成**：文章定稿后审计提示词 → `cover-gen.py -f 提示词.md -o assets/covers/NNN-cover.png --slug NNN`（qwen-image-2.0，固定生成 1 张直接出最终 900×383，无候选文件）→ 确认 `meta.yaml.cover_image` 解析正确。
+7. **封面生成**：文章定稿后审计提示词 → `cover-gen.py -f 提示词.md -o assets/covers/NNN-cover.png --slug NNN`（qwen-image-3.0-pro，固定生成 1 张直接出最终 900×383，无候选文件）→ 确认 `meta.yaml.cover_image` 解析正确。
 
 ## 已知边界速查
 

@@ -119,8 +119,8 @@ metadata:
 ### 7. 封面（文章定稿后）
 
 - **顺序：先定稿文章 → 再审计封面提示词（必须忠于文章传达的内容）→ 才调用付费 API 生成。**
-- 工具：`cover-gen.py`（ZenMux `qwen/qwen-image-2.0`，Vertex AI 协议，16:9 → 900×383）；密钥走 `secrets_env.py`（环境变量 `ZENMUX_API_KEY` 或工作区根 `.env`）。
-- **模型选择（2026-08-17 用户决策）**：qwen-image-2.0 按张计费 $0.0289/张（约 gpt-image-2 的 1/5），中文生图/排版强；gpt-image-2 按 token 计费偏贵，不再使用。
+- 工具：`cover-gen.py`（ZenMux `qwen/qwen-image-3.0-pro`，Vertex AI 协议，16:9 → 900×383）；密钥走 `secrets_env.py`（环境变量 `ZENMUX_API_KEY` 或工作区根 `.env`）。
+- **模型选择（2026-08-17 用户决策）**：统一 qwen-image-3.0-pro，$0.04/张（约 gpt-image-2 的 1/4），画质最佳；gpt-image-2 按 token 计费偏贵弃用。
 - **固定生成 1 张**：不再出 4 张候选让挑选；`--out` 直接写最终 900×383 封面到 `assets/covers/NNN-cover.png`，covers 下只保留最终版（无 `-1/-2/...` 候选文件）。
 - 提示词要点：科学主题意象 + 3D 渲染 + 明确配色 + 左侧留白给标题 + 无文字。
 - **上传到微信草稿是手动步骤**：微信编辑器封面对话框自动化不可靠（2026-08 实测，已固定），`publish.py` 只打印封面文件路径；保存草稿后人工在编辑器封面区「拖拽或选择封面 → 本地上传 → 选择该文件 → 确定 → 保存」。
@@ -144,7 +144,7 @@ metadata:
 | `publish.py` | 存草稿（群发人工） | 分段粘贴 + 图片对话框上传；保存成功双重确认才写 `draft`；选择器集中在文件顶部 `SEL_*`；draft_url 存无 token 链接（发布安全） |
 | `publish-check.py` | 发布前检查 | PyYAML；封面路径与 publish 统一 |
 | `pdf-figure.py` | 从论文 PDF 截整图 | 补充图取末页最大图区；主文图按图注裁剪 |
-| `cover-gen.py` | ZenMux 生成封面 | qwen-image-2.0，16:9 → 900×383；固定 1 张直接出最终版 |
+| `cover-gen.py` | ZenMux 生成封面 | qwen-image-3.0-pro，16:9 → 900×383；固定 1 张直接出最终版 |
 | `summary.py` | 自动生成摘要 | DeepSeek 生成 ≤120 字；无密钥时规则回退；写入 meta.yaml |
 | `fetch-image.py` | 下载外部图片 | 独立小工具，urllib 实现 |
 | `wechat_cover.py` | 封面路径统一解析 | 两脚本共用 |

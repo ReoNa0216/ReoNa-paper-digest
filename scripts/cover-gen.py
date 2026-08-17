@@ -3,9 +3,9 @@
 
 流程（对齐 SKILL「封面」章节）：
   1. 文章定稿后，先审计封面提示词（须忠于文章传达的内容），再调用本工具；
-  2. 经 ZenMux Vertex AI 协议调用 qwen/qwen-image-2.0（OpenAI 兼容 /api/v1 端点
-     实测 gpt-image-2 按 token 计费过贵；2026-08-17 用户决策换 perCount 按张
-     计费的 qwen-image-2.0，$0.0289/张，约 gpt-image-2 的 1/5）；
+  2. 经 ZenMux Vertex AI 协议调用 qwen/qwen-image-3.0-pro（2026-08-17 用户决策：
+     gpt-image-2 按 token 计费过贵弃用；对比 qwen 2.0/3.0/3.0-pro 后统一用
+     3.0-pro，$0.04/张，画质最佳）；
   3. 固定生成 1 张（用户决策：不再出 4 张候选让挑选），直接缩放为 900×383
      写入目标路径（covers 下只保留最终版，不留 -1/-2/... 候选文件）。
 
@@ -32,7 +32,8 @@ for _stream in (sys.stdout, sys.stderr):
         _stream.reconfigure(encoding="utf-8", errors="replace")
 
 ZENMUX_VERTEX_BASE = "https://zenmux.ai/api/vertex-ai"
-DEFAULT_MODEL = "qwen/qwen-image-2.0"
+# 2026-08-17 用户决策：统一用 qwen-image-3.0-pro（$0.04/张，画质最佳）
+DEFAULT_MODEL = "qwen/qwen-image-3.0-pro"
 # 封面比例 ≈ 900/383 ≈ 2.35:1，取 16:9 横版（qwen 支持 aspect_ratio）
 ASPECT_RATIO = "16:9"
 FINAL_SIZE = (900, 383)
@@ -50,7 +51,7 @@ def load_prompt(path: pathlib.Path) -> str:
     return parts[1].strip() if len(parts) > 1 else text.strip()
 
 
-def generate(prompt: str, out_path: pathlib.Path, slug: str):
+def generate(prompt: str, out_path: pathlib.Path, slug: str, model: str = DEFAULT_MODEL):
     """生成 1 张封面并直接缩放为 900×383 写入 out_path。"""
     from PIL import Image
 
@@ -59,9 +60,9 @@ def generate(prompt: str, out_path: pathlib.Path, slug: str):
         vertexai=True,
         http_options=types.HttpOptions(api_version="v1", base_url=ZENMUX_VERTEX_BASE),
     )
-    print(f"[cover] 调用 {DEFAULT_MODEL}（{ASPECT_RATIO}，生成 1 张）…")
+    print(f"[cover] 调用 {model}（{ASPECT_RATIO}，生成 1 张）…")
     resp = client.models.generate_images(
-        model=DEFAULT_MODEL,
+        model=model,
         prompt=prompt,
         config=types.GenerateImagesConfig(
             number_of_images=1,
@@ -111,12 +112,13 @@ def finalize(src: pathlib.Path, out: pathlib.Path):
 
 
 def main():
-    ap = argparse.ArgumentParser(description="ZenMux qwen-image-2.0 生成公众号封面（900×383）")
+    ap = argparse.ArgumentParser(description="ZenMux 生成公众号封面（900×383）")
     ap.add_argument("-f", "--prompt-file", type=pathlib.Path, help="提示词文件（--- 前为元数据）")
     ap.add_argument("--prompt", help="直接给提示词")
     ap.add_argument("-o", "--out", type=pathlib.Path, default=pathlib.Path("assets/covers/cover.png"),
                     help="最终封面输出路径（默认 assets/covers/cover.png）")
     ap.add_argument("--slug", default="001", help="日志用文章序号前缀")
+    ap.add_argument("--model", default=DEFAULT_MODEL, help=f"生成模型（默认 {DEFAULT_MODEL}）")
     ap.add_argument("--final", type=pathlib.Path, help="（兼容）把指定已有图缩放为 900×383，不调用 API")
     ap.add_argument("--final-out", type=pathlib.Path, help="--final 时的输出路径")
     args = ap.parse_args()
@@ -132,7 +134,7 @@ def main():
         prompt = load_prompt(args.prompt_file)
     if not prompt:
         fail("需要 --prompt 或 -f 提示词文件")
-    generate(prompt, args.out, args.slug)
+    generate(prompt, args.out, args.slug, args.model)
 
 
 if __name__ == "__main__":
