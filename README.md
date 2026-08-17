@@ -1,4 +1,4 @@
-# ReoNa-paper-digest
+﻿# ReoNa-paper-digest
 
 **把「论文 + ChatGPT 讨论」一键变成微信公众号文章草稿的完整管线。**
 
@@ -37,7 +37,7 @@ python -m playwright install chromium   # 浏览器自动化（存草稿用）
 ```
 你的工作区/
 ├── ReoNa-paper-digest/        # 本仓库（脚本单一份，不复制进专栏）
-├── scOmics/                   # 你的第一个合集（专栏）——new-column.py 创建
+├── Metabolomics/                   # 你的第一个合集（专栏）——new-column.py 创建
 ├── inbox/                     # 收料暂存区（gitignore）
 └── .env                       # API 密钥（KEY=VALUE，gitignore）
 ```

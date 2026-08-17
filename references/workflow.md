@@ -1,4 +1,4 @@
-# ReoNa-paper-digest — 分阶段操作清单
+﻿# ReoNa-paper-digest — 分阶段操作清单
 
 > 规范与约束以 `SKILL.md` 为准；本文件是每阶段的具体操作步骤。每个阶段通常是独立会话。
 
@@ -8,7 +8,7 @@
 
 1. 用自然语言向用户收集：专栏名称与定位、目标读者、核心主题范围、更新频率。
 2. **一键建合集（推荐）**：`python ReoNa-paper-digest/scripts/new-column.py 合集名 --desc "定位"`——自动建 `合集名/`（EDITORIAL_CALENDAR / BRAND_VOICE / ARTICLES_SUMMARY / README / assets/covers）。
-3. 手动建时在工作区根（仓库的上一级）下创建专栏根目录（如 `scOmics/`），写入：
+3. 手动建时在工作区根（仓库的上一级）下创建专栏根目录（如 `Metabolomics/`），写入：
    - `EDITORIAL_CALENDAR.md`（选题日历：每篇序号/标题/摘要/依赖/状态）
    - `BRAND_VOICE.md`（人设、口吻、禁用词清单——直接复用 SKILL 的 L1 禁用词）
    - `ARTICLES_SUMMARY.md`（每篇一行占位）

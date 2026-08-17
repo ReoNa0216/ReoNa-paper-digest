@@ -1,10 +1,10 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """prepare.py — 一键收料：inbox/子文件夹 → articles/00X-标题 完整骨架
 
 用户约定（2026-08-16）：
   1. 在 inbox/ 下建一个子文件夹（名字随意，最好含标题关键词）
   2. 把材料丢进去：对话导出（.md/.zip/.json）+ 论文 PDF + 补充材料 PDF
-  3. 运行：python prepare.py inbox/子文件夹 --title "文章标题" [--series scOmics]
+  3. 运行：python prepare.py inbox/子文件夹 --title "文章标题" [--series Metabolomics]
   4. 脚本自动：识别材料 → 建 articles/骨架 → 归档 PDF → 跑 ingest.py → 汇报
 
 识别规则：
@@ -97,7 +97,7 @@ def main():
     ap = argparse.ArgumentParser(description="inbox 子文件夹 → articles/骨架（一键收料）")
     ap.add_argument("subdir", help="inbox 下的材料文件夹（相对或绝对路径）")
     ap.add_argument("--title", required=True, help="文章标题（写入目录名与 meta.yaml）")
-    ap.add_argument("--series", default="scOmics", help="专栏目录名（默认 scOmics）")
+    ap.add_argument("--series", default="Metabolomics", help="专栏目录名（默认 Metabolomics）")
     ap.add_argument("--article-number", type=int, default=None, help="手动指定序号（默认自动取下一篇）")
     args = ap.parse_args()
 
