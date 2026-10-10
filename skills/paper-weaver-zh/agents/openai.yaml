@@ -1,0 +1,4 @@
+interface:
+  display_name: "Paper Weaver 中文科研写作"
+  short_description: "将论文证据与研究讨论组织成中文科研长文，并可按账号权限准备秀米导入稿"
+  default_prompt: "请用 $paper-weaver-zh 将这些论文和 ChatGPT 讨论编织成中文科研公众号文章，完成证据核对、结构重组、全文润色、同步预览，并在需要时按普通账号或 VIP 账号准备秀米导入。"

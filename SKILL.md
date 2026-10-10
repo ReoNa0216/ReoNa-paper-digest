@@ -171,3 +171,7 @@ metadata:
 
 - 每次写作只加载：`EDITORIAL_CALENDAR`、`ARTICLES_SUMMARY`、`BRAND_VOICE`、当前文章 `refs.md`/`materials.md`/`dialogue.md`——**不加载其他文章全文**。
 - 一次会话只写一篇文章；跨会话续写必须获用户当前确认。
+
+## 可选增强工作流
+
+用户要求多论文专题、按主题重组讨论、证据台账、润色后的科学复核或秀米排版时，可读取 [Paper Weaver 中文科研写作](skills/paper-weaver-zh/SKILL.md)，采用其组合流程。先运行 `skills/paper-weaver-zh/scripts/pipeline.py doctor` 核实依赖；增强层复用本目录的脚本，另外四个 skill 需独立安装。原有收料、渲染、封面与微信草稿流程继续使用上述工具链。

@@ -20,7 +20,7 @@
 ## 安装
 
 ```bash
-git clone https://github.com/<your>/ReoNa-paper-digest.git
+git clone https://github.com/ReoNa0216/ReoNa-paper-digest.git
 cd ReoNa-paper-digest
 pip install -r requirements.txt
 python -m playwright install chromium   # 浏览器自动化（存草稿用）
@@ -90,11 +90,25 @@ python ReoNa-paper-digest/scripts/prepare.py inbox/第2篇 --title "文章标题
 | `fetch-image.py` | 下载外部图片到本地 |
 | `wechat_cover.py` | 封面路径统一解析 |
 
+## 可选增强：Paper Weaver 中文科研写作
+
+[`skills/paper-weaver-zh/`](skills/paper-weaver-zh/README.md) 收录了 [kainineo97/paper-weaver-zh](https://github.com/kainineo97/paper-weaver-zh/tree/paper-weaver-zh) 的组合写作流程，增加多论文证据台账、主题化叙事、全文润色后的科学复核，以及阅读页与复制页同步和秀米排版指引。原有工具链仍位于 `scripts/`，继续按上述命令使用。
+
+增强层会自动找到本仓库的 ReoNa 工具链；完整增强流程还需要独立安装 `note-organizing`、`article-writing`、`humanizer-zh`、`reona-paper-digest-zh` 四个 skill。依赖来源与安装说明见增强层 README。先检查本机依赖：
+
+```bash
+python ReoNa-paper-digest/skills/paper-weaver-zh/scripts/pipeline.py doctor
+```
+
+`doctor` 列出缺失依赖并返回非零退出码；缺失增强层依赖不影响原有工具链。`dependencies.lock.json` 保留贡献者本机修订版的历史指纹，与本仓库不同的文件会显示 `CHANGED`。
+
 ## 测试
 
 ```bash
-python -m unittest ReoNa-paper-digest/tests/test_publish_logic.py   # 15 项发布逻辑
-python ReoNa-paper-digest/tests/verify_render.py dist/article.html  # 20 项渲染检查
+python ReoNa-paper-digest/tests/test_publish_logic.py   # 15 项发布逻辑
+python ReoNa-paper-digest/scripts/render.py ReoNa-paper-digest/tests/fixtures/sample-article.md --out-dir ReoNa-paper-digest/tests/output/render --screenshot
+python ReoNa-paper-digest/tests/verify_render.py        # 20 项渲染检查
+python -m unittest discover -s ReoNa-paper-digest/skills/paper-weaver-zh/scripts/tests -v
 ```
 
 ## 目录结构
@@ -107,8 +121,14 @@ ReoNa-paper-digest/
 │   ├── theme/wechat.css      # 微信主题样式
 │   └── vendor/               # MathJax / Mermaid（本地化，防 CDN 失效）
 ├── tests/                    # 离线测试 + fixtures
+├── skills/paper-weaver-zh/    # 可选组合写作增强层（独立依赖）
 └── requirements.txt / LICENSE
 ```
+
+## 贡献者
+
+- [ReoNa0216](https://github.com/ReoNa0216)：原始论文精读与微信公众号工具链。
+- [kainineo97（LIANG KAI NI）](https://github.com/kainineo97)：Paper Weaver 中文科研写作增强层，包括证据台账、叙事重组、科学复核、同步页面编排及秀米排版指引。合并保留其原始提交与作者归属。
 
 ## 许可证
 
