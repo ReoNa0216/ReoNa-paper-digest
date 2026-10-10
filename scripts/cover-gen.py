@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
-"""cover-gen.py — 生成公众号封面（900×383 PNG）
+"""cover-gen.py — 公众号封面尺寸整理与可选 ZenMux 生成（900×383 PNG）
 
-流程（对齐 SKILL「封面」章节）：
-  1. 文章定稿后，先审计封面提示词（须忠于文章传达的内容），再调用本工具；
-  2. 经 ZenMux Vertex AI 协议调用 qwen/qwen-image-3.0-pro（2026-08-17 用户决策：
-     gpt-image-2 按 token 计费过贵弃用；对比 qwen 2.0/3.0/3.0-pro 后统一用
-     3.0-pro，$0.04/张，画质最佳）；
-  3. 固定生成 1 张（用户决策：不再出 4 张候选让挑选），直接缩放为 900×383
-     写入目标路径（covers 下只保留最终版，不留 -1/-2/... 候选文件）。
+Codex 工作流优先使用会话内的原生 ImageGen，无需自行配置 API Key。
+本脚本不直接调用 Codex 会话工具，支持两种用途：
+  1. --final / --final-out：将已有图片缩放为 900×383，不调用 API、
+     不读取密钥，也不需要 google-genai；
+  2. -f / --prompt：用户明确选择 ZenMux 时，经 Vertex AI 协议调用
+     qwen/qwen-image-3.0-pro，固定生成 1 张并缩放为 900×383。
 
-密钥读取：环境变量 ZENMUX_API_KEY → 工作区根 .env → $DSH_HOME/.credentials.yaml
-兜底（统一走 secrets_env.py，发布安全）。
+生成前先定稿文章并审计提示词。成品保存到项目内指定路径。
+仅 ZenMux 生成需要密钥：环境变量 ZENMUX_API_KEY → 工作区根 .env →
+$DSH_HOME/.credentials.yaml（统一走 secrets_env.py）。
 
 用法：
+  python cover-gen.py --final /path/to/generated.png --final-out assets/covers/001-cover.png
   python cover-gen.py -f prompts/20260815-cover.md --out assets/covers/001-cover.png --slug 001
   python cover-gen.py --prompt "..." --out assets/covers/001-cover.png
 """
@@ -22,9 +23,6 @@ import base64
 import pathlib
 import sys
 
-from google import genai
-from google.genai import types
-
 from secrets_env import require_secret
 
 for _stream in (sys.stdout, sys.stderr):
@@ -32,7 +30,7 @@ for _stream in (sys.stdout, sys.stderr):
         _stream.reconfigure(encoding="utf-8", errors="replace")
 
 ZENMUX_VERTEX_BASE = "https://zenmux.ai/api/vertex-ai"
-# 2026-08-17 用户决策：统一用 qwen-image-3.0-pro（$0.04/张，画质最佳）
+# 明确选择 ZenMux 生成时使用的默认模型。
 DEFAULT_MODEL = "qwen/qwen-image-3.0-pro"
 # 封面比例 ≈ 900/383 ≈ 2.35:1，取 16:9 横版（qwen 支持 aspect_ratio）
 ASPECT_RATIO = "16:9"
@@ -53,6 +51,8 @@ def load_prompt(path: pathlib.Path) -> str:
 
 def generate(prompt: str, out_path: pathlib.Path, slug: str, model: str = DEFAULT_MODEL):
     """生成 1 张封面并直接缩放为 900×383 写入 out_path。"""
+    from google import genai
+    from google.genai import types
     from PIL import Image
 
     client = genai.Client(
@@ -99,7 +99,7 @@ def _encode_png(img) -> bytes:
 
 
 def finalize(src: pathlib.Path, out: pathlib.Path):
-    """兼容旧用法：把已有图缩放为 900×383。"""
+    """把已有图缩放为 900×383，不调用 API。"""
     from PIL import Image
 
     if not src.exists():
@@ -107,19 +107,22 @@ def finalize(src: pathlib.Path, out: pathlib.Path):
     img = Image.open(src).convert("RGB")
     img = img.resize(FINAL_SIZE, Image.LANCZOS)
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.save(out, "PNG")
+    img.save(out, "PNG")
     print(f"[ok] 封面 → {out}（{FINAL_SIZE[0]}×{FINAL_SIZE[1]}）")
 
 
 def main():
-    ap = argparse.ArgumentParser(description="ZenMux 生成公众号封面（900×383）")
+    ap = argparse.ArgumentParser(
+        description="公众号封面：本地尺寸整理或 ZenMux 生成（900×383）",
+        epilog="Codex 工作流优先使用原生 ImageGen，由会话调用；本脚本不直接调用会话工具。",
+    )
     ap.add_argument("-f", "--prompt-file", type=pathlib.Path, help="提示词文件（--- 前为元数据）")
     ap.add_argument("--prompt", help="直接给提示词")
     ap.add_argument("-o", "--out", type=pathlib.Path, default=pathlib.Path("assets/covers/cover.png"),
                     help="最终封面输出路径（默认 assets/covers/cover.png）")
     ap.add_argument("--slug", default="001", help="日志用文章序号前缀")
-    ap.add_argument("--model", default=DEFAULT_MODEL, help=f"生成模型（默认 {DEFAULT_MODEL}）")
-    ap.add_argument("--final", type=pathlib.Path, help="（兼容）把指定已有图缩放为 900×383，不调用 API")
+    ap.add_argument("--model", default=DEFAULT_MODEL, help=f"ZenMux 生成模型（默认 {DEFAULT_MODEL}）")
+    ap.add_argument("--final", type=pathlib.Path, help="把指定已有图缩放为 900×383，无需 API 密钥")
     ap.add_argument("--final-out", type=pathlib.Path, help="--final 时的输出路径")
     args = ap.parse_args()
 

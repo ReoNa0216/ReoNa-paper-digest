@@ -29,7 +29,9 @@ python -m playwright install chromium   # 浏览器自动化（存草稿用）
 > 💡 Windows 中文系统提示：`requirements.txt` 保持纯 ASCII（注释为英文）。若你自行加中文注释，pip 在 GBK 默认编码下会报 `UnicodeDecodeError`。
 
 可选依赖：
-- 封面生成（`cover-gen.py`）需要 ZenMux API Key（环境变量 `ZENMUX_API_KEY`）
+
+- Codex 内生成封面优先使用原生 ImageGen，无需自行配置 API Key；生成后保存到项目内，最终尺寸为 900×383
+- 选用 `cover-gen.py` 的 ZenMux 生成方式时才需要 `ZENMUX_API_KEY`，可放在环境变量或工作区根 `.env` 中；`--final` 仅整理已有图片尺寸，无需密钥
 - 摘要生成（`summary.py`）需要 DeepSeek API Key（`DEEPSEEK_API_KEY`）；无密钥时自动退回规则抽取
 
 ## 快速开始
@@ -71,7 +73,7 @@ python ReoNa-paper-digest/scripts/prepare.py inbox/第2篇 --title "文章标题
 2. `python ReoNa-paper-digest/scripts/render.py article.md --screenshot` → 预览
 3. 预览确认后 `python ReoNa-paper-digest/scripts/publish.py 文章目录` → 自动填标题/作者/摘要、粘贴正文、上传图片、保存草稿，返回草稿链接
 
-> **封面**：生成（`cover-gen.py`）后，在草稿编辑器手动设置（微信封面对话框自动化不可靠，已固定为手动步骤）。
+> **封面**：Codex 工作流优先调用原生 ImageGen；用户明确选择时也可用 `cover-gen.py` 经 ZenMux 生成。成品保存在项目内，最终尺寸为 900×383；在草稿编辑器手动设置（微信封面对话框自动化不可靠，已固定为手动步骤）。
 > **发表**：永远由你在公众号后台人工点击，脚本绝不自动群发。
 
 ## 工具一览
@@ -85,7 +87,8 @@ python ReoNa-paper-digest/scripts/prepare.py inbox/第2篇 --title "文章标题
 | `publish.py` | 存草稿：填标题/摘要、分段粘贴、图片上传、保存确认 |
 | `publish-check.py` | 发布前检查（元数据/封面/引用等） |
 | `pdf-figure.py` | 从论文 PDF 截取插图（含图注裁剪） |
-| `cover-gen.py` | ZenMux qwen-image-3.0-pro 生成封面（900×383，固定 1 张） |
+| Codex `image_gen` | 默认生成封面，无需自行配置 API Key（会话内工具） |
+| `cover-gen.py` | 本地缩放为 900×383（`--final`，无需密钥）；可选 ZenMux 生成（固定 1 张） |
 | `summary.py` | DeepSeek 生成摘要（≤120 字），无密钥规则回退 |
 | `fetch-image.py` | 下载外部图片到本地 |
 | `wechat_cover.py` | 封面路径统一解析 |

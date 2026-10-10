@@ -71,12 +71,12 @@ python ReoNa-paper-digest/scripts/prepare.py inbox/子文件夹 --title "文章�
 ## Phase 5 · Publish（渲染 → 预览 → 草稿）
 
 1. 摘要：`python ReoNa-paper-digest/scripts/summary.py articles/00X-标题`（自动生成并写入 meta.yaml summary，无需手写）。
-2. 渲染：`render.py articles/00X-标题/article.md --screenshot` → `dist/preview.html`。
-3. 用户打开 preview.html 做视觉终审（公式/流程图/表格/图片/提示块/字体）。
-4. 通过后：`publish.py articles/00X-标题`（自动填标题/作者/摘要 → 分段粘贴正文 + 图片上传 → 保存草稿 → 回报链接）。**群发仍由用户在后台人工点击。**
-5. **封面（手动）**：草稿保存后，人工在编辑器封面区「拖拽或选择封面 → 本地上传 → 选择 `publish.py` 打印的封面文件 → 确定 → 再保存」；**不做自动上传**（微信编辑器封面对话框自动化不可靠，已固定为手动）。
-6. 更新 `EDITORIAL_CALENDAR` / `ARTICLES_SUMMARY` / `README` 状态，Git 提交。
-7. **封面生成**：文章定稿后审计提示词 → `cover-gen.py -f 提示词.md -o assets/covers/NNN-cover.png --slug NNN`（qwen-image-3.0-pro，固定生成 1 张直接出最终 900×383，无候选文件）→ 确认 `meta.yaml.cover_image` 解析正确。
+2. **封面生成**：文章定稿后审计提示词 → 读取 ImageGen skill 并优先调用 Codex 原生 `image_gen`（无需自行配置 API Key，固定生成 1 张）→ 将成品保存到项目内 `assets/covers/NNN-cover.png` 并视觉核验。需要精确缩放时运行 `cover-gen.py --final <原图路径> --final-out assets/covers/NNN-cover.png`（900×383，无需密钥）。确认 `meta.yaml.cover_image` 解析正确。用户明确选择 ZenMux 时才运行 `cover-gen.py -f 提示词.md -o assets/covers/NNN-cover.png --slug NNN`；原生工具不可用时先说明，不自动切换。
+3. 渲染：`render.py articles/00X-标题/article.md --screenshot` → `dist/preview.html`。
+4. 用户打开 preview.html 做视觉终审（公式/流程图/表格/图片/提示块/字体）。
+5. 通过后：`publish.py articles/00X-标题`（自动填标题/作者/摘要 → 分段粘贴正文 + 图片上传 → 保存草稿 → 回报链接）。**群发仍由用户在后台人工点击。**
+6. **封面（手动）**：草稿保存后，人工在编辑器封面区「拖拽或选择封面 → 本地上传 → 选择 `publish.py` 打印的封面文件 → 确定 → 再保存」；**不做自动上传**（微信编辑器封面对话框自动化不可靠，已固定为手动）。
+7. 更新 `EDITORIAL_CALENDAR` / `ARTICLES_SUMMARY` / `README` 状态，Git 提交。
 
 ## 已知边界速查
 

@@ -118,10 +118,10 @@ metadata:
 
 ### 7. 封面（文章定稿后）
 
-- **顺序：先定稿文章 → 再审计封面提示词（必须忠于文章传达的内容）→ 才调用付费 API 生成。**
-- 工具：`cover-gen.py`（ZenMux `qwen/qwen-image-3.0-pro`，Vertex AI 协议，16:9 → 900×383）；密钥走 `secrets_env.py`（环境变量 `ZENMUX_API_KEY` 或工作区根 `.env`）。
-- **模型选择（2026-08-17 用户决策）**：统一 qwen-image-3.0-pro，$0.04/张（约 gpt-image-2 的 1/4），画质最佳；gpt-image-2 按 token 计费偏贵弃用。
-- **固定生成 1 张**：不再出 4 张候选让挑选；`--out` 直接写最终 900×383 封面到 `assets/covers/NNN-cover.png`，covers 下只保留最终版（无 `-1/-2/...` 候选文件）。
+- **顺序：先定稿文章 → 再审计封面提示词（必须忠于文章传达的内容）→ 生成封面。**
+- **首选 Codex 原生 ImageGen**：会话提供 `image_gen` 工具时，读取 ImageGen skill 并调用内置工具，无需自行配置 `ZENMUX_API_KEY` 或 `OPENAI_API_KEY`。原生工具由 Codex 会话调用，`cover-gen.py` 不直接调用它。
+- **固定生成 1 张**：最终封面保存到项目内 `assets/covers/NNN-cover.png`，尺寸为 900×383，并视觉核验。原生工具返回图片后再将成品落盘；需要精确缩放时可用 `cover-gen.py --final <原图路径> --final-out assets/covers/NNN-cover.png`，此步骤不调用 API、不读取密钥。covers 下只保留最终版（无 `-1/-2/...` 候选文件）。
+- **ZenMux 为可选命令行方式**：用户明确选择后，运行 `cover-gen.py -f 提示词.md --out assets/covers/NNN-cover.png --slug NNN`，默认调用 `qwen/qwen-image-3.0-pro`。密钥走 `secrets_env.py`（环境变量 `ZENMUX_API_KEY` 或工作区根 `.env`）。原生工具不可用或失败时，说明情况并由用户选择是否改用 ZenMux，不自动切换付费 API。
 - 提示词要点：科学主题意象 + 3D 渲染 + 明确配色 + 左侧留白给标题 + 无文字。
 - **上传到微信草稿是手动步骤**：微信编辑器封面对话框自动化不可靠（2026-08 实测，已固定），`publish.py` 只打印封面文件路径；保存草稿后人工在编辑器封面区「拖拽或选择封面 → 本地上传 → 选择该文件 → 确定 → 保存」。
 - 发布前摘要：`summary.py <文章目录>` 自动生成并写入 meta.yaml 的 summary（≤120 字，DeepSeek）。
@@ -144,7 +144,8 @@ metadata:
 | `publish.py` | 存草稿（群发人工） | 分段粘贴 + 图片对话框上传；保存成功双重确认才写 `draft`；选择器集中在文件顶部 `SEL_*`；draft_url 存无 token 链接（发布安全） |
 | `publish-check.py` | 发布前检查 | PyYAML；封面路径与 publish 统一 |
 | `pdf-figure.py` | 从论文 PDF 截整图 | 补充图取末页最大图区；主文图按图注裁剪 |
-| `cover-gen.py` | ZenMux 生成封面 | qwen-image-3.0-pro，16:9 → 900×383；固定 1 张直接出最终版 |
+| Codex `image_gen` | 默认生成封面 | 会话内原生工具，无需自行配置 API Key；固定生成 1 张 |
+| `cover-gen.py` | 本地尺寸整理 / 可选 ZenMux 生成 | `--final` 无需密钥；ZenMux 默认 qwen-image-3.0-pro；输出 900×383 |
 | `summary.py` | 自动生成摘要 | DeepSeek 生成 ≤120 字；无密钥时规则回退；写入 meta.yaml |
 | `fetch-image.py` | 下载外部图片 | 独立小工具，urllib 实现 |
 | `wechat_cover.py` | 封面路径统一解析 | 两脚本共用 |
