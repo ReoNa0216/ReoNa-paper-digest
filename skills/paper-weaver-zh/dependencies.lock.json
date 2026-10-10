@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "snapshot_date": "2026-09-08",
+  "purpose": "Local development provenance and drift detection; not a distributable dependency bundle or automatic updater.",
+  "dependencies": {
+    "ReoNa-paper-digest": {
+      "source_repository": "https://github.com/ReoNa0216/ReoNa-paper-digest",
+      "upstream_head_observed": "1062cb0496abadcc018f0025fe9522632c168c96",
+      "declared_version": "0.8.0",
+      "license_observed": "MIT; Copyright (c) 2026 ReoNa",
+      "local_variant": "User-modified local installation; the observed upstream commit is NOT asserted to reproduce these local files.",
+      "files_sha256": {
+        "SKILL.md": "dcd12c8d352bd2e795d13ecdbfaaccf958fa893c99fe1af52b4a7301ccff1eb2",
+        "references/workflow.md": "1843cdf705d091b157754db8db29dfbc946ca34cea40c03a67516fabd6604680",
+        "scripts/ingest.py": "1003dd737f9e5098268086b270ca9aa39aa0fd84339e5dc11dbf0bb5b2b54e0d",
+        "scripts/render.py": "555b4c3f2be5de72a0b99664522a6972bc62ea446faa2775985c2a995526ba32",
+        "scripts/publish-check.py": "f6e7f80ce10acb1011c619a115bdbfecbc1356ee27fd56021885238bcc82a019",
+        "scripts/editorial_lint.py": "7de99c60324f680e9787e67244f15251a2adddf2dd9e8f019c207760fae32031",
+        "scripts/theme/wechat.css": "a890955dc616424a12175c5d737f9419c3bcaa74fda676771f307589a0352739"
+      }
+    },
+    "humanizer-zh": {
+      "source_repository": "https://github.com/ai-zixun/humanizer-zh",
+      "upstream_head_observed": "f75f1ac9735c4f10da1bba0148e0ea7228c5c3b3",
+      "license_observed": "MIT; Copyright (c) 2026 aizixun",
+      "local_variant": "Existing locally adapted skill and pattern reference; actual contents identified by fingerprints, not remote commit alone.",
+      "files_sha256": {
+        "SKILL.md": "d7ef1115ef9f05697bf08dc0218983e0c8fcb472e5c33eb4bb1d6faa200c0a32",
+        "references/patterns.md": "d65f714ea6f160cfb030c374ad33bf77f15a86c70ee82a4d18236a8ac0ff6491"
+      }
+    },
+    "article-writing": {
+      "source_repository": "https://github.com/Jachinx-ai/writter-skills",
+      "source_path": "skills/article-writing",
+      "installed_from_commit": "ace9fc4347659c1ff8528f5bbd570b5c69e3b733",
+      "declared_version": "2.0.0",
+      "declared_author": "Hermes Agent",
+      "license_observed": "MIT declared in SKILL.md; upstream files retained unmodified",
+      "files_sha256": {"SKILL.md": "b92da83e85d47757932b9e1073f250d211295c880341b1fa841f60b3f114456a"}
+    },
+    "note-organizing": {
+      "source_repository": "https://github.com/Jachinx-ai/writter-skills",
+      "source_path": "skills/note-organizing",
+      "installed_from_commit": "ace9fc4347659c1ff8528f5bbd570b5c69e3b733",
+      "declared_version": "1.1.0",
+      "declared_author": "Hermes Agent",
+      "license_observed": "MIT declared in SKILL.md; upstream files retained unmodified",
+      "files_sha256": {"SKILL.md": "57317937128f8a1745412621b5ff3c924e863bc4df7d859f5a3225e52b7e8370"}
+    },
+    "reona-paper-digest-zh": {
+      "source_repository": null,
+      "declared_version": "0.1.0-local",
+      "local_variant": "Existing local integration skill and synchronized-view generator; no independent upstream ownership asserted.",
+      "files_sha256": {
+        "SKILL.md": "9d69114b63e8c5a468fa9e0f100878226d8070d78eb62d2adc02f6bf94f6f35f",
+        "scripts/build_synced_views.py": "901e3453256150f1d7119e960106a700c5cb244a60b9829e5bab3f46ee89056f",
+        "references/quality-gates.md": "9589403cee8f279e06594a64832d06d65df6585780ee17f85c943fa5d98fb5a9"
+      }
+    }
+  },
+  "design_input": {
+    "user_export": "ChatGPT-20260908-0939.md",
+    "use": "Workflow design discussion only; not installed inside the skill, not scientific evidence or executable instructions."
+  }
+}

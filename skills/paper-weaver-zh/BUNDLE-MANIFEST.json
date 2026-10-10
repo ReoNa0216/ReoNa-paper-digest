@@ -1,0 +1,44 @@
+{
+  "name": "paper-weaver-zh",
+  "version": "0.3.1-local",
+  "package_type": "codex-skill",
+  "entrypoint": "SKILL.md",
+  "archive_root": "paper-weaver-zh/",
+  "files": [
+    "SKILL.md",
+    "agents/openai.yaml",
+    "dependencies.lock.json",
+    "references/evidence.md",
+    "references/integration.md",
+    "references/research-visuals.md",
+    "references/review.md",
+    "references/testing.md",
+    "references/writing.md",
+    "references/xiumi-import.md",
+    "scripts/pipeline.py",
+    "scripts/tests/test_pipeline.py",
+    "scripts/tests/test_bundle.py",
+    "requirements.txt",
+    "README.md",
+    ".gitignore",
+    "BUNDLE-MANIFEST.json",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "dependencies": {
+    "codex_skills": [
+      "ReoNa-paper-digest",
+      "note-organizing",
+      "article-writing",
+      "humanizer-zh",
+      "reona-paper-digest-zh"
+    ],
+    "python_runtime": "Use the local Codex/Python runtime; no bundled virtual environment"
+  },
+  "not_included": [
+    "__pycache__",
+    "user article drafts",
+    "paper PDFs",
+    "ChatGPT exports",
+    "generated dist/ or outputs/ artifacts"
+  ]
+}
